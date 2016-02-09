@@ -14,6 +14,9 @@ public class Recursion implements hw01 {
     // Recursively calculates a new guess and checks for accuracy
     // to the nearest thousandth of a percent
     public double guessBetter(double n, double guess) {
+	if (n == 0) {
+	    return 0;
+	}
 	if ((Math.abs(n - guess * guess) / n) * 100.0 < 0.001) {
 	    return guess;
 	}
