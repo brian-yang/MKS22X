@@ -46,10 +46,16 @@ public class QueenBoard implements hw02 {
     }
 
     public void printSolution(){
-	/**Print the board like toString, except
-	      all negative numbers, and 0's are replaced with '_'
-	         and all 1's are replaced with 'Q'
-	*/
+	for (int i = 0; i < board.length; i++) {
+	    for (int j = 0; j < board.length; j++) {
+		if (board[i][j] == 1) {
+		    System.out.print(" Q ");
+		} else {
+		    System.out.print(" _ ");
+		}
+	    }
+	    System.out.print('\n');
+	}
     }
 
     /********Do Not Edit Below This Line**********************************/
