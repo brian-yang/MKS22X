@@ -3,17 +3,6 @@ public class KnightBoard implements hw03 {
     private int[] rowInc;
     private int[] colInc;
 
-    public static void main(String[] args) {
-	KnightBoard knightboard;
-	if (args.length != 0) {
-	    knightboard = new KnightBoard(Integer.parseInt(args[0]));
-	} else {
-	    knightboard = new KnightBoard(7);
-	}
-	knightboard.solve();
-	knightboard.printSolution();
-    }
-
     public KnightBoard(int col, int rows) {
 	newBoard(col, rows);
 	possibleRowShifts(); // When a knight moves, its row position may change
@@ -58,7 +47,7 @@ public class KnightBoard implements hw03 {
 	    return false;
 	}
 	board[row][column] = counter; 
-	if (counter == board.length * board.length) {
+	if (counter == board.length * board[0].length) {
 	    return true;
 	}
 	for (int i = 0; i < 8; i++) {
