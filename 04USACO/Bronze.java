@@ -32,7 +32,7 @@ public class Bronze {
 	    }
 	}
 	//System.out.println(totalPastureDepth);
-	System.out.println(calculateVolume(totalPastureDepth));
+	System.out.println(calculateVolume(totalPastureDepth) + ",7,Yang,Brian");
     }
 
     private static int calculateVolume(int totalPastureDepth) {
