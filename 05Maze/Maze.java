@@ -1,10 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-public class Maze{
+public class Maze {
 
-    private char[][]maze;
-    private int startx,starty;
+    public char[][] maze; // need to replace with private
+    private int startx, starty;
     private boolean animate;
 
     /*Constructor loads a maze text file.
@@ -21,30 +21,46 @@ public class Maze{
     public Maze(String filename, boolean ani) {
 	animate = ani;
 	try {
-	    Scanner in = new Scanner(new File(filename));
+	    Scanner in = new Scanner(new File(filename));	    
+	    String lines = "";
+	    int numRows = 0;
+	    int numCols = 0;
+	    while (in.hasNextLine()) {
+		lines += in.nextLine().trim();
+		numRows++;
+		if (numRows == 1) {
+		    numCols = lines.length();
+		}
+	    }
+	    initializeMaze(numRows, numCols, lines);
+
 	} catch (FileNotFoundException e) {
 	    System.out.println("Could not find file!");
+	    System.out.println(e.getMessage());
+	    System.exit(0);
 	}
-
-	String maze;
-	int numRows;
-	int numCols;
-        while (in.hasNextLine()) {
-	    if (!in.trim().isEmpty()) {
-		maze += in.nextLine().trim() + '\n';
-		numRows++;
-	    }
-	}
-	int ind = 0;
-	while (maze.charAt(ind) != '\n') {
-	    ind++;
-	}
-	numCols = ind;
-	initializeMaze(numRows, numCols, maze);
     }
 
-    private static void initializeMaze(int rows, int cols, String maze) {
-	char[][] maze = new char[numRows][numCols];
+    public static void main(String[] args) {
+	Maze m = new Maze("data1.dat", false);
+	//m.clearTerminal();
+	for (int i = 0; i < m.maze.length; i++) {
+	    for (int j = 0; j < m.maze[0].length; j++) {
+		System.out.print(m.maze[i][j]);
+	    }
+	    System.out.println();
+	}
+    }
+
+    private void initializeMaze(int rows, int cols, String lines) {
+	int numChars = 0;
+	maze = new char[rows][cols];
+	for (int i = 0; i < rows; i++) {
+	    for (int j= 0; j < cols; j++) {
+		maze[i][j] = lines.charAt(numChars);
+		numChars++;
+	    }
+	}
     }
 
     /*Main Solve Function
@@ -52,11 +68,11 @@ public class Maze{
       Things to note:
        When no S is contained in maze, print an error and return false.
     */
-    public boolean solve(){
-        if(startx < 0){
+    public boolean solve() {
+        if (startx < 0){
             System.out.println("No starting point 'S' found in maze.");
             return false;
-        }else{
+        } else{
             maze[startx][starty] = ' ';
             return solve(startx,starty);
         }
@@ -86,9 +102,7 @@ public class Maze{
         return false; //so it compiles
     }
 
-
-    //FREE STUFF!!! *you should be aware of this*
-
+    //=================================================================
     public void clearTerminal(){
         System.out.println(CLEAR_SCREEN);
     }
@@ -135,10 +149,4 @@ public class Maze{
         catch (InterruptedException e) {
         }
     }
-
-    
-    //END FREE STUFF
-
-
-
 }
