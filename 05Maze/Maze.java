@@ -40,17 +40,18 @@ public class Maze {
 	    System.exit(0);
 	}
     }
- 
-    public static void main(String[] args) {
-    	Maze m = new Maze("data1.dat", false);
-    	//m.clearTerminal();
-    	for (int i = 0; i < m.maze.length; i++) {
-    	    for (int j = 0; j < m.maze[0].length; j++) {
-    		System.out.print(m.maze[i][j]);
-    	    }
-    	    System.out.println(" | ");
-    	}
-    }
+
+    // Code to test if constructor is getting proper input
+    // public static void main(String[] args) {
+    // 	Maze m = new Maze("data1.dat", false);
+    // 	//m.clearTerminal();
+    // 	for (int i = 0; i < m.maze.length; i++) {
+    // 	    for (int j = 0; j < m.maze[0].length; j++) {
+    // 		System.out.print(m.maze[i][j]);
+    // 	    }
+    // 	    System.out.println();
+    // 	}
+    // }
 
     private void initializeMaze(int rows, int cols, String lines) {
 	int numChars = 0;
@@ -58,24 +59,25 @@ public class Maze {
 	for (int i = 0; i < rows; i++) {
 	    for (int j= 0; j < cols; j++) {
 		maze[i][j] = lines.charAt(numChars);
+		if (maze[i][j] == 'S') {
+		    startx = j; // column number
+		    starty = i; // row number
+		}
 		numChars++;
 	    }
 	}
-	System.out.println(cols);
-
     }
 
     /*Main Solve Function
 
       Things to note:
-       When no S is contained in maze, print an error and return false.
+      When no S is contained in maze, print an error and return false.
     */
     public boolean solve() {
         if (startx < 0){
             System.out.println("No starting point 'S' found in maze.");
             return false;
         } else{
-            maze[startx][starty] = ' ';
             return solve(startx,starty);
         }
     }
@@ -87,11 +89,11 @@ public class Maze {
       The S is replaced with '@' but the 'E' is not.
 
       Postcondition:
-        Returns true when the maze is solved,
-        Returns false when the maze has no solution.
+      Returns true when the maze is solved,
+      Returns false when the maze has no solution.
 
-        All visited spots that were not part of the solution are changed to '.'
-        All visited spots that are part of the solution are changed to '@'
+      All visited spots that were not part of the solution are changed to '.'
+      All visited spots that are part of the solution are changed to '@'
 
     */
     private boolean solve(int x, int y){
@@ -109,18 +111,18 @@ public class Maze {
         System.out.println(CLEAR_SCREEN);
     }
 
-    public String toString(){
-        int maxx = maze.length;
-        int maxy = maze[0].length;
+    public String toString() {
+        int maxx = maze[0].length;
+        int maxy = maze.length;
         String ans = "";
         if(animate){
             ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
         }
         for(int i = 0; i < maxx * maxy; i++){
-            if(i % maxy == 0 && i != 0){
+            if(i % maxx == 0 && i != 0){
                 ans += "\n";
             }
-            char c =  maze[i % maxy][i / maxx];
+            char c =  maze[i / maxx][i % maxx];
             if(c == '#'){
                 ans += color(38,47) + c;
             }else{
