@@ -60,8 +60,8 @@ public class Maze {
 	    for (int j= 0; j < cols; j++) {
 		maze[i][j] = lines.charAt(numChars);
 		if (maze[i][j] == 'S') {
-		    startx = j; // column number
-		    starty = i; // row number
+		    startx = i;
+		    starty = j;
 		}
 		numChars++;
 	    }
@@ -97,10 +97,23 @@ public class Maze {
 
     */
     private boolean solve(int x, int y){
-        if(animate){
+        if (animate){
             System.out.println(this);
             wait(20);
         }
+
+	if (maze[x][y] == '#' || maze[x][y] == '.') {
+	    return false;
+	} else if (maze[x][y] == ' ' || maze[x][y] == 'S') {
+	    maze[x][y] = '@';
+	    if (solve(x + 1, y) || solve(x, y + 1) ||
+		solve(x, y - 1) || solve(x - 1, y)) {
+		return true;
+	    }
+	    maze[x][y] = '.';
+	} else if (maze[x][y] == 'E') {
+	    return true;
+	}
 
         //COMPLETE SOLVE
         return false; //so it compiles
@@ -118,6 +131,7 @@ public class Maze {
         if(animate){
             ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
         }
+
         for(int i = 0; i < maxx * maxy; i++){
             if(i % maxx == 0 && i != 0){
                 ans += "\n";
