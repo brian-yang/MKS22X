@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Maze {
 
-    public char[][] maze; // need to replace with private
+    private char[][] maze;
     private int startx, starty;
     private boolean animate;
 
@@ -40,16 +40,16 @@ public class Maze {
 	    System.exit(0);
 	}
     }
-
+ 
     public static void main(String[] args) {
-	Maze m = new Maze("data1.dat", false);
-	//m.clearTerminal();
-	for (int i = 0; i < m.maze.length; i++) {
-	    for (int j = 0; j < m.maze[0].length; j++) {
-		System.out.print(m.maze[i][j]);
-	    }
-	    System.out.println();
-	}
+    	Maze m = new Maze("data1.dat", false);
+    	//m.clearTerminal();
+    	for (int i = 0; i < m.maze.length; i++) {
+    	    for (int j = 0; j < m.maze[0].length; j++) {
+    		System.out.print(m.maze[i][j]);
+    	    }
+    	    System.out.println(" | ");
+    	}
     }
 
     private void initializeMaze(int rows, int cols, String lines) {
@@ -61,6 +61,8 @@ public class Maze {
 		numChars++;
 	    }
 	}
+	System.out.println(cols);
+
     }
 
     /*Main Solve Function
@@ -115,14 +117,14 @@ public class Maze {
             ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
         }
         for(int i = 0; i < maxx * maxy; i++){
-            if(i % maxx == 0 && i != 0){
+            if(i % maxy == 0 && i != 0){
                 ans += "\n";
             }
-            char c =  maze[i % maxx][i / maxx];
+            char c =  maze[i % maxy][i / maxx];
             if(c == '#'){
-                ans += color(38,47)+c;
+                ans += color(38,47) + c;
             }else{
-                ans += color(33,40)+c;
+                ans += color(33,40) + c;
             }
         }
         return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);

@@ -1,8 +1,8 @@
-public class Driver05{
+public class Driver {
 
     public static void main(String[]args){
         Maze f;
-        f = new Maze(data1.dat,true);//true animates the maze.
+        f = new Maze("data1.dat", true);//true animates the maze.
         
         f.clearTerminal();
         f.solve();
