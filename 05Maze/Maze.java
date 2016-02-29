@@ -5,7 +5,7 @@ public class Maze {
 
     private char[][] maze;
     private int startx, starty;
-    private boolean animate;
+    private boolean animate, hasStart;
 
     /*Constructor loads a maze text file.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -13,13 +13,14 @@ public class Maze {
       ' ' - locations that can be moved onto
       'E' - the location of the goal (only 1 per file)
       'S' - the location of the start(only 1 per file)
-
+      
       2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
 
       3. When the file is not found, print an error and exit the program.
     */
     public Maze(String filename, boolean ani) {
 	animate = ani;
+	hasStart = false;
 	try {
 	    Scanner in = new Scanner(new File(filename));	    
 	    String lines = "";
@@ -62,6 +63,7 @@ public class Maze {
 		if (maze[i][j] == 'S') {
 		    startx = i;
 		    starty = j;
+		    hasStart = true;
 		}
 		numChars++;
 	    }
@@ -74,7 +76,7 @@ public class Maze {
       When no S is contained in maze, print an error and return false.
     */
     public boolean solve() {
-        if (startx < 0){
+        if (!hasStart){
             System.out.println("No starting point 'S' found in maze.");
             return false;
         } else{
