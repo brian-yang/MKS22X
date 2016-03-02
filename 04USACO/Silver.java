@@ -30,7 +30,7 @@ public class Silver {
 	    int[] endCoords = {in.nextInt(), in.nextInt()};
 
 	    System.out.println(solve(maze, startCoords, endCoords,
-	    			     0, numMoves, debug));
+	    			     0, numMoves, debug) + ",Yang,Brian,7");
 
 	} catch (FileNotFoundException e) {
 	    System.out.println("Could not find file!");
