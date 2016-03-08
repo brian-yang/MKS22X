@@ -8,8 +8,12 @@ public class Sorts {
     // 	System.out.println(Arrays.toString(test));
     // }
 
-    public static void mergeSort(int[] data) {
+    public static void mergesort(int[] data) {
 	mergeSortHelper(data, 0, data.length - 1);
+    }
+
+    public static String name() {
+	return "7,Yang,Brian";
     }
 
     private static void mergeSortHelper(int[] arr, int start, int end) {
