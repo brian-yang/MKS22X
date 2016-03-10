@@ -1,13 +1,13 @@
 import java.util.*;
 
 public class Quick {
-    public static void main(String[] args) {
-    	int[] data = {0, 10, 100, -15, 20, -2, 1000, 20, 31, -500, 32};
-	quickSort(data);
-    	//System.out.println(quickselect(data, Integer.parseInt(args[0])));
-    	//System.out.println(partition(data, 0, data.length - 1));
-    	System.out.println(Arrays.toString(data));
-    }
+    // public static void main(String[] args) {
+    // 	int[] data = {0, 10, 100, -15, 20, -2, 1000, 20, 31, -500, 32};
+    // 	quickSort(data);
+    // 	//System.out.println(quickselect(data, Integer.parseInt(args[0])));
+    // 	//System.out.println(partition(data, 0, data.length - 1));
+    // 	System.out.println(Arrays.toString(data));
+    // }
 
     public static String name() {
 	return "7,Yang,Brian";
