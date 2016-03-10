@@ -1,17 +1,38 @@
 import java.util.*;
 
 public class Quick {
-    // public static void main(String[] args) {
-    // 	int[] data = {0, 10, 100, -15, 20, -2, 1000, 60, 151};
-    // 	System.out.println(quickselect(data, 9));
-    // 	//System.out.println(partition(data, 0, data.length - 1));
-    // 	System.out.println(Arrays.toString(data));
-    // }
+    public static void main(String[] args) {
+    	int[] data = {0, 10, 100, -15, 20, -2, 1000, 20, 31, -500, 32};
+	quickSort(data);
+    	//System.out.println(quickselect(data, Integer.parseInt(args[0])));
+    	//System.out.println(partition(data, 0, data.length - 1));
+    	System.out.println(Arrays.toString(data));
+    }
 
     public static String name() {
 	return "7,Yang,Brian";
     }
 
+    /* ============
+     * QUICK SORT
+     * ============
+     */
+    public static void quickSort(int[] data) {
+	quickSort(data, 0, data.length - 1);
+    }
+
+    private static void quickSort(int[] data, int left, int right) {
+	if (left < right) {
+	    int pivot = partition(data, left, right);
+	    quickSort(data, left, pivot - 1);
+	    quickSort(data, pivot + 1, right);
+	}
+    }
+
+    /* ============
+     * QUICK SELECT
+     * ============
+     */
     public static int quickselect(int[] data, int k) {
 	if (k <= 0) {
 	    k = 1;
@@ -20,15 +41,13 @@ public class Quick {
     }
 
     private static int quickselect(int[] data, int k, int left, int right) {
-	if (data.length > 1) {
-	    int partitionIndex = partition(data, left, right);
-	    if (partitionIndex == k) {
-		return data[partitionIndex];
-	    } else if (partitionIndex > k) {
-		return quickselect(data, k, left, partitionIndex - 1);
-	    } else if (partitionIndex < k) {
-		return quickselect(data, k, partitionIndex + 1, right);
-	    }
+	int partitionIndex = partition(data, left, right);
+	if (partitionIndex == k) {
+	    return data[partitionIndex];
+	} else if (partitionIndex > k) {
+	    return quickselect(data, k, left, partitionIndex - 1);
+	} else if (partitionIndex < k) {
+	    return quickselect(data, k, partitionIndex + 1, right);
 	}
 	return 0;
     }
