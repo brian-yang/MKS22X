@@ -13,6 +13,9 @@ public class Quick {
     }
 
     public static int quickselect(int[] data, int k) {
+	if (k <= 0) {
+	    k = 1;
+	}
 	return quickselect(data, k - 1, 0, data.length - 1);
     }
 
