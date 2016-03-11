@@ -2,10 +2,10 @@ import java.util.*;
 
 public class QuickOld {
     public static void main(String[] args) {
-    	int[] data = new int[100];
+    	int[] data = new int[4000000];
 	int[] copy = new int[data.length];
 	for (int i = 0; i < data.length; i++) {
-	    data[i] = (int) (Math.random() * 100);
+	    data[i] = Integer.MIN_VALUE + (int) (Math.random() * Integer.MAX_VALUE);
 	    copy[i] = data[i];
 	}
     	//System.out.println(quickselectOld(data, Integer.parseInt(args[0])));
