@@ -8,19 +8,28 @@ public class QuickOld {
 	    data[i] = Integer.MIN_VALUE + (int) (Math.random() * Integer.MAX_VALUE);
 	    copy[i] = data[i];
 	}
-    	//System.out.println(quickselectOld(data, Integer.parseInt(args[0])));
-    	//System.out.println(partitionOld(data, 0, data.length - 1));
-    	quickSortOld(data);
-	Arrays.sort(copy);
-
-	System.out.println("Done! Sorted? " + Arrays.equals(data, copy));
+    	//System.out.println(Arrays.toString(partitionOld(data, 0, data.length - 1)));
+	// System.out.println(Arrays.toString(data));
+	// for (int i = 0; i < 1; i++) {
+	//     System.out.println(quickselectOld(data, i));
+	// }
+	if (args.length > 0) {
+	    if (Integer.parseInt(args[0]) == 1) {
+		quickSortOld(data);
+	    } else if (Integer.parseInt(args[0]) == 2) {
+		Arrays.sort(copy);
+	    } else {
+		quickSortOld(data);
+		Arrays.sort(copy);
+		System.out.println("Done! Sorted? " + Arrays.equals(data, copy));
+	    }
+	}
     	//System.out.println(Arrays.toString(data));
     }
 
     public static String name() {
 	return "7,Yang,Brian";
     }
-
 
     // OLD VERSION OF QUICK SORT
 
