@@ -4,21 +4,58 @@ public class MyLinkedList {
 
     public static void main(String[] args) {
 	MyLinkedList l = new MyLinkedList();
-	for (int i = 0; i < 10; i++) {
+	// ============ARGUMENTS===============
+	int arrSize;
+	if (args.length > 0) {
+	    arrSize = Integer.parseInt(args[0]);
+	} else {
+	    arrSize = 10;
+	}
+	// ====================================
+	for (int i = 0; i < arrSize; i++) {
 	    l.add((int) (Math.random() * 100));
 	}
 	// toString test
+	System.out.println("toString Test");
 	System.out.println(l);
+	System.out.println();
+
 	// size(), get(int index) tests
+	System.out.println("get tests");
 	for (int i = 0; i < l.size(); i++) {
 	    System.out.println(l.get(i));
 	}
 	System.out.println();
+
 	// set(int index, int newValue) test
+	System.out.println("set test");
 	for (int i = 0; i < l.size(); i++) {
 	    System.out.println(l.set(i, 100));
 	}
 	System.out.println(l);
+	System.out.println();
+
+	// indexOf test
+	System.out.println("indexOf 10th element");
+	System.out.println(l.indexOf(100));
+	System.out.println();
+
+	// add(int index, int value) test
+	System.out.println("Add Tests");
+	for (int i = 0; i < 1; i++) {
+	    System.out.println( l.add((int) (Math.random() * l.size()), (int) (Math.random() * 100)) );
+	    System.out.println(l);
+	}
+	System.out.println();
+
+	// add(int index, int value) test
+	System.out.println("Remove Tests");
+	for (int i = 0; i < 1; i++) {
+	    //System.out.println( l.remove((int) (Math.random() * l.size())) );
+	    System.out.println( l.remove(0) );
+	    System.out.println(l);
+	}
+	System.out.println();
     }
 
     // BASIC GET AND SET METHODS
@@ -45,13 +82,72 @@ public class MyLinkedList {
 	return old;
     }
 
+    // INDEXOF METHOD
+
+    public int indexOf(int value) {
+	LNode cur = head;
+	int index = 0;
+	while (cur != null) {
+	    if (cur.getValue() == value) {
+		return index;
+	    }
+	    index++;
+	    cur = cur.getNext();
+	}
+	return -1;
+    }
+
+    // ADD AND REMOVE
+    public boolean add(int index, int value) {
+	// edge cases
+	if (index > size || index < 0) {
+	    return false;
+	} else if (index == size) {
+	    return add(value);
+	}
+	// add at index
+	LNode rep = new LNode(value);
+	if (index == 0) {
+	    rep.setNext(head);
+	    head = rep;
+	} else {
+	    LNode cur = head;
+	    int curIndex = 0;
+	    while (curIndex < index - 1) {
+		cur = cur.getNext();
+		curIndex++;
+	    }
+	    rep.setNext(cur.getNext());
+	    cur.setNext(rep);
+	}
+	size++;
+	return true;
+    }
+
+    public boolean remove(int index) {
+	if (size() == 0 || index >= size || index < 0) {
+	    return false;
+	}
+	if (size() == 1) {
+	    head = null;
+	} else {
+	    LNode cur = head;
+	    int curIndex = 0;
+	    while (curIndex < index - 1) {
+		cur = cur.getNext();
+		curIndex++;
+	    }
+	    cur.setNext(cur.getNext().getNext());
+	}
+	size--;
+	return true;
+    }
+
     // ADD TO END AND TOSTRING METHODS
 
     public boolean add(int value) {
 	if (head == null) {
 	    head = new LNode(value);
-	    size = 1;
-	    return true;
 	} else {
 	    LNode cur = head;
 	    while (cur.getNext() != null) {
@@ -59,14 +155,14 @@ public class MyLinkedList {
 	    }
 	    cur.setNext(new LNode(value));
 	}
-	size += 1;
+	size++;
 	return true;
     }
 
     public String toString() {
 	String arr = "[";
 	LNode p = head;
-	while(p != null){
+	while (p != null){
 	    arr += p.getValue();
 	    if (p.getNext() != null){
 		arr += ", ";
