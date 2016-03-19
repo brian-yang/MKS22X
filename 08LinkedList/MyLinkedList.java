@@ -1,5 +1,6 @@
 public class MyLinkedList {
     private LNode head;
+    private LNode last;
     private int size;
 
     public static void main(String[] args) {
@@ -28,15 +29,15 @@ public class MyLinkedList {
 	System.out.println();
 
 	// set(int index, int newValue) test
-	System.out.println("set test");
+	System.out.println("set tests");
 	for (int i = 0; i < l.size(); i++) {
-	    System.out.println(l.set(i, 100));
+	    System.out.println(l.set(i, (int) (Math.random() * 100)));
 	}
 	System.out.println(l);
 	System.out.println();
 
 	// indexOf test
-	System.out.println("indexOf 10th element");
+	System.out.println("index of 100");
 	System.out.println(l.indexOf(100));
 	System.out.println();
 
@@ -98,15 +99,15 @@ public class MyLinkedList {
     }
 
     // ADD AND REMOVE
+
     public boolean add(int index, int value) {
 	// edge cases
 	if (index > size || index < 0) {
 	    return false;
-	} else if (index == size) {
-	    return add(value);
-	}
+	} // CALLING add(int value) MIGHT MAKE this add function faster
 	// add at index
 	LNode rep = new LNode(value);
+	// Connect new node to previous head
 	if (index == 0) {
 	    rep.setNext(head);
 	    head = rep;
@@ -117,6 +118,7 @@ public class MyLinkedList {
 		cur = cur.getNext();
 		curIndex++;
 	    }
+	    // Set current
 	    rep.setNext(cur.getNext());
 	    cur.setNext(rep);
 	}
@@ -128,8 +130,9 @@ public class MyLinkedList {
 	if (size() == 0 || index >= size || index < 0) {
 	    return false;
 	}
-	if (size() == 1) {
-	    head = null;
+	// Set head to next node after removed first node
+	if (index == 0) {
+	    head = head.getNext();
 	} else {
 	    LNode cur = head;
 	    int curIndex = 0;
@@ -137,6 +140,10 @@ public class MyLinkedList {
 		cur = cur.getNext();
 		curIndex++;
 	    }
+	    if (index == size - 1) {
+		last = cur;
+	    }
+	    // Set current
 	    cur.setNext(cur.getNext().getNext());
 	}
 	size--;
@@ -148,12 +155,10 @@ public class MyLinkedList {
     public boolean add(int value) {
 	if (head == null) {
 	    head = new LNode(value);
+	    last = head;
 	} else {
-	    LNode cur = head;
-	    while (cur.getNext() != null) {
-		cur = cur.getNext();
-	    }
-	    cur.setNext(new LNode(value));
+	    last.setNext(new LNode(value));
+	    last = last.getNext();
 	}
 	size++;
 	return true;
