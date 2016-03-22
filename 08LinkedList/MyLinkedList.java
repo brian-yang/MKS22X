@@ -1,10 +1,10 @@
-public class MyLinkedList {
+public class MyLinkedList<T> {
     private LNode head;
     private LNode last;
     private int size;
 
     public static void main(String[] args) {
-	MyLinkedList l = new MyLinkedList();
+	MyLinkedList<String> l = new MyLinkedList<String>();
 	// ============ARGUMENTS===============
 	int arrSize;
 	if (args.length > 0) {
@@ -13,8 +13,10 @@ public class MyLinkedList {
 	    arrSize = 10;
 	}
 	// ====================================
+	// add(int value) test
 	for (int i = 0; i < arrSize; i++) {
-	    l.add((int) (Math.random() * 100));
+	    //l.add(new Integer((int) (Math.random() * 100)));
+	    l.add("Hi");
 	}
 	// toString test
 	System.out.println("toString Test");
@@ -31,25 +33,29 @@ public class MyLinkedList {
 	// set(int index, int newValue) test
 	System.out.println("set tests");
 	for (int i = 0; i < l.size(); i++) {
-	    System.out.println(l.set(i, (int) (Math.random() * 100)));
+	    //System.out.println(l.set(i, 
+	    //new Integer((int) (Math.random() * 100))));
+	    System.out.println(l.set(i, "works"));
 	}
 	System.out.println(l);
 	System.out.println();
 
 	// indexOf test
 	System.out.println("index of 100");
-	System.out.println(l.indexOf(100));
+	//System.out.println(l.indexOf(new Integer(100)));
+	System.out.println(l.indexOf("works"));
 	System.out.println();
 
 	// add(int index, int value) test
 	System.out.println("Add Tests");
 	for (int i = 0; i < 1; i++) {
-	    System.out.println( l.add((int) (Math.random() * l.size()), (int) (Math.random() * 100)) );
+	    //System.out.println( l.add((int) (Math.random() * l.size()), new Integer((int) (Math.random() * 100))) );
+	    System.out.println( l.add((int) (Math.random() * l.size()), "Testing") );
 	    System.out.println(l);
 	}
 	System.out.println();
 
-	// add(int index, int value) test
+	// remove(int index) test
 	System.out.println("Remove Tests");
 	for (int i = 0; i < 1; i++) {
 	    //System.out.println( l.remove((int) (Math.random() * l.size())) );
@@ -65,7 +71,7 @@ public class MyLinkedList {
 	return size;
     }
 
-    public int get(int index) {
+    public T get(int index) {
 	LNode cur = head;
 	for (int i = 0; i < index; i++) {
 	    cur = cur.getNext();
@@ -73,23 +79,23 @@ public class MyLinkedList {
 	return cur.getValue();
     }
 
-    public int set(int index, int newValue) {
+    public T set(int index, T newValue) {
 	LNode cur = head;
 	for (int i = 0; i < index; i++) {
 	    cur = cur.getNext();
 	}
-	int old = cur.getValue();
+	T old = cur.getValue();
 	cur.setValue(newValue);
 	return old;
     }
 
     // INDEXOF METHOD
 
-    public int indexOf(int value) {
+    public int indexOf(T value) {
 	LNode cur = head;
 	int index = 0;
 	while (cur != null) {
-	    if (cur.getValue() == value) {
+	    if (cur.getValue().equals(value)) {
 		return index;
 	    }
 	    index++;
@@ -100,7 +106,7 @@ public class MyLinkedList {
 
     // ADD AND REMOVE
 
-    public boolean add(int index, int value) {
+    public boolean add(int index, T value) {
 	// edge cases
 	if (index > size || index < 0) {
 	    return false;
@@ -152,7 +158,7 @@ public class MyLinkedList {
 
     // ADD TO END AND TOSTRING METHODS
 
-    public boolean add(int value) {
+    public boolean add(T value) {
 	if (head == null) {
 	    head = new LNode(value);
 	    last = head;
@@ -186,19 +192,19 @@ public class MyLinkedList {
      */
 
     private class LNode {
-	private int num;
+	private T thing;
 	private LNode node;
 
-	public LNode(int num) {
-	    this.num = num;
+	public LNode(T thing) {
+	    this.thing = thing;
 	}
 
-	public int getValue() {
-	    return num;
+	public T getValue() {
+	    return thing;
 	}
 
-	public void setValue(int num) {
-	    this.num = num;
+	public void setValue(T thing) {
+	    this.thing = thing;
 	}
 
 	public LNode getNext() {
