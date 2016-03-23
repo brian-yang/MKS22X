@@ -18,6 +18,7 @@ public class MyLinkedList<T> {
 	    //l.add(new Integer((int) (Math.random() * 100)));
 	    l.add("Hi");
 	}
+
 	// toString test
 	System.out.println("toString Test");
 	System.out.println(l);
@@ -33,7 +34,7 @@ public class MyLinkedList<T> {
 	// set(int index, int newValue) test
 	System.out.println("set tests");
 	for (int i = 0; i < l.size(); i++) {
-	    //System.out.println(l.set(i, 
+	    //System.out.println(l.set(i,
 	    //new Integer((int) (Math.random() * 100))));
 	    System.out.println(l.set(i, "works"));
 	}
@@ -72,6 +73,9 @@ public class MyLinkedList<T> {
     }
 
     public T get(int index) {
+	if (index >= size() || index < 0) {
+	    throw new IndexOutOfBoundsException();
+	}
 	LNode cur = head;
 	for (int i = 0; i < index; i++) {
 	    cur = cur.getNext();
@@ -80,6 +84,9 @@ public class MyLinkedList<T> {
     }
 
     public T set(int index, T newValue) {
+	if (index >= size() || index < 0) {
+	    throw new IndexOutOfBoundsException();
+	}
 	LNode cur = head;
 	for (int i = 0; i < index; i++) {
 	    cur = cur.getNext();
@@ -108,9 +115,11 @@ public class MyLinkedList<T> {
 
     public boolean add(int index, T value) {
 	// edge cases
-	if (index > size || index < 0) {
-	    return false;
-	} // CALLING add(int value) MIGHT MAKE this add function faster
+	if (index > size() || index < 0) {
+	    throw new IndexOutOfBoundsException();
+	} else if (index == size()) {
+	    return add(value);
+	}
 	// add at index
 	LNode rep = new LNode(value);
 	// Connect new node to previous head
@@ -132,12 +141,14 @@ public class MyLinkedList<T> {
 	return true;
     }
 
-    public boolean remove(int index) {
-	if (size() == 0 || index >= size || index < 0) {
-	    return false;
+    public T remove(int index) {
+	if (index >= size || index < 0) {
+	    throw new IndexOutOfBoundsException();
 	}
 	// Set head to next node after removed first node
+	T oldValue;
 	if (index == 0) {
+	    oldValue = head.getValue();
 	    head = head.getNext();
 	} else {
 	    LNode cur = head;
@@ -149,11 +160,13 @@ public class MyLinkedList<T> {
 	    if (index == size - 1) {
 		last = cur;
 	    }
+	    // Store old last
+	    oldValue = cur.getNext().getValue();
 	    // Set current
 	    cur.setNext(cur.getNext().getNext());
 	}
 	size--;
-	return true;
+	return oldValue;
     }
 
     // ADD TO END AND TOSTRING METHODS
