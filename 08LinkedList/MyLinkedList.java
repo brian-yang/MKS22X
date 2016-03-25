@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class MyLinkedList<T> implements Iterable<T> {
     private LNode head;
@@ -149,18 +150,24 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     private class LLIterator implements Iterator<T> {
-	LNode current;
+	LNode next;
 
 	public LLIterator() {
-	    current = head;
+	    next = head;
 	}
 
 	public boolean hasNext() {
-	    return current.getNext() != null;
+	    return next != null;
 	}
 
 	public T next() {
-	    return current.getValue();
+	    if (!hasNext()) {
+		throw new NoSuchElementException();
+	    } else {
+		T value = next.getValue();
+		next = next.getNext();
+		return value;
+	    }
 	}
 
 	/*
