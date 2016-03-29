@@ -1,11 +1,17 @@
 import java.util.*;
 
-public class MyQueue<T> extends MyLinkedList<T> {
+public class MyQueue<T> {
+    private MyLinkedList<T> ll;
+
+    public MyQueue() {
+	ll = new MyLinkedList<T>();
+    }
+
     /**
      * Adds the given item to the rear of the queue.
      */
     public void enqueue(T item) {
-	add(item);
+	ll.add(item);
     }
 
     /**
@@ -16,7 +22,7 @@ public class MyQueue<T> extends MyLinkedList<T> {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return remove(0);
+	return ll.remove(0);
     }
 
     /**
@@ -27,14 +33,14 @@ public class MyQueue<T> extends MyLinkedList<T> {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return get(0);
+	return ll.get(0);
     }
 
     /**
      * Returns the number of items currently in the queue.
      */
     public int size() {
-	return super.size();
+	return ll.size();
     }
 
     /**
