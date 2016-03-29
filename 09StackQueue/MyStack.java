@@ -1,16 +1,11 @@
 import java.util.*;
 
-public class MyStack<T> {
-    private MyLinkedList<T> ll;
-
-    public MyStack() {
-	ll = new MyLinkedList<T>();
-    }
+public class MyStack<T> extends MyLinkedList<T> {
     /**
      * Adds the given item to the top of the stack.
      */
     public void push(T item) {
-	ll.add(0, item);
+	add(0, item);
     }
 
     /**
@@ -21,7 +16,7 @@ public class MyStack<T> {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return ll.remove(0);
+	return remove(0);
     }
 
     /**
@@ -32,14 +27,14 @@ public class MyStack<T> {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return ll.get(0);
+	return get(0);
     }
 
     /**
      * Returns the number of items currently in the stack.
      */
     public int size() {
-	return ll.size();
+	return super.size();
     }
 
     /**
