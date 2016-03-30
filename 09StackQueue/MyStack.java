@@ -6,6 +6,38 @@ public class MyStack<T> {
     public MyStack() {
 	ll = new MyLinkedList<T>();
     }
+
+    public static void main(String[] args) {
+	MyStack<Integer> ms = new MyStack<Integer>();
+	Stack<Integer> s = new Stack<Integer>();
+	int amount;
+	if (args.length > 0) {
+	    amount = Integer.parseInt(args[0]);
+	} else {
+	    amount = 1000000;
+	}
+	for (int i = 0; i < amount; i++) {
+	    int n = (int) (Math.random() * 10000);
+	    ms.push(i);
+	    s.push(i);
+	}
+	while (!s.empty()) {
+	    if ( !(s.peek()).equals(ms.peek()) ) {
+		System.out.println("Failed");
+		System.exit(0);
+	    }
+	    if ( !(s.pop()).equals(ms.pop()) ) {
+		System.out.println("Failed");
+		System.exit(0);
+	    }
+	}
+	if (ms.isEmpty()) {
+	    System.out.println("Success!");
+	} else {
+	    System.out.println("Not empty!");
+	}
+    }
+
     /**
      * Adds the given item to the top of the stack.
      */
