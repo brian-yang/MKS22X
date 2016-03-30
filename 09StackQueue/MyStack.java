@@ -10,6 +10,11 @@ public class MyStack<T> {
     public static void main(String[] args) {
 	MyStack<Integer> ms = new MyStack<Integer>();
 	Stack<Integer> s = new Stack<Integer>();
+	// Test exceptions
+	//ms.pop();
+	//ms.peek();
+
+	// Test functions
 	int amount;
 	if (args.length > 0) {
 	    amount = Integer.parseInt(args[0]);
@@ -21,7 +26,7 @@ public class MyStack<T> {
 	    ms.push(i);
 	    s.push(i);
 	}
-	while (!s.empty()) {
+	while (!s.empty() && s.size() == ms.size()) {
 	    if ( !(s.peek()).equals(ms.peek()) ) {
 		System.out.println("Failed");
 		System.exit(0);
