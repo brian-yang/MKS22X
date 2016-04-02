@@ -26,6 +26,23 @@ public class MyLinkedList<T> implements Iterable<T> {
 	};
     }
 
+    public static double sumL(MyLinkedList<Integer> ll) {
+	Integer i = 0;
+	Iterator<Integer> it = ll.iterator();
+	while (it.hasNext()) {
+	    i += it.next();
+	}
+	return ((double) i.intValue());
+    }
+
+    public static double sumA(ArrayList<Integer> a) {
+	Integer n = 0;
+	for (int i = 0; i < a.size(); i++) {
+	    n += a.get(i);
+	}
+	return ((double) n.intValue());
+    }
+
     public String toString(){
 	String ans = "[";
 	LNode p = head;
