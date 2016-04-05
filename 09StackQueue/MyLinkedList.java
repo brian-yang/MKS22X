@@ -26,6 +26,28 @@ public class MyLinkedList<T> implements Iterable<T> {
 	};
     }
 
+    public Iterator<T> iteratorBack(){
+	//This uses an anonymous class! You don't need to know this.
+	return new Iterator<T>() {
+	    private LNode current = tail;
+
+	    public boolean hasNext() {
+		return current != null;
+	    }
+	    public T next() {
+		if (!hasNext()) {
+		    throw new NoSuchElementException();
+		}
+		T value = current.getValue();
+		current = current.getPrev();
+		return value;
+	    }
+	    public void remove() {
+		throw new UnsupportedOperationException();
+	    }
+	};
+    }
+
     public static double sumL(MyLinkedList<Integer> ll) {
 	Integer i = 0;
 	Iterator<Integer> it = ll.iterator();

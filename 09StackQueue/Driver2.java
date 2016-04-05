@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class Driver2 {
     public static void main(String[] args) {
@@ -22,6 +22,11 @@ public class Driver2 {
 	}
 	System.out.println(l.toString(true));
 
+	System.out.println("Previous Iterator Check");
+	Iterator<Integer> it = l.iteratorBack();
+	while (it.hasNext()) {
+	    System.out.println(it.next());
+	}
 
     // 	// sum(MyLinkedList ll) test
     // 	System.out.println(l);
@@ -85,5 +90,12 @@ public class Driver2 {
     	    System.out.println(l.toString(true));
     	}
     	System.out.println();
+
+	System.out.println("Previous Iterator Check");
+	it = l.iteratorBack();
+	while (it.hasNext()) {
+	    System.out.println(it.next());
+	}
+
     }
 }
