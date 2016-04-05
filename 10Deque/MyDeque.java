@@ -10,6 +10,8 @@ public class MyDeque<T> {
     public MyDeque() {
 	arr = (T[]) new Object[10];
 	size = 0;
+	head = 0;
+	tail = 0;
     }
 
     @SuppressWarnings("unchecked")
@@ -33,21 +35,57 @@ public class MyDeque<T> {
     }
 
     public void addFirst(T value) {
+	if (size + 1 > arr.length) {
+	    grow();
+	}
+	if (head == 0) {
+	    head = arr.length - 1;
+	} else {
+	    head -= 1;
+	}
+	arr[head] = value;
+	size++;
     }
 
     public void addLast(T value) {
+	if (size + 1 > arr.length) {
+	    grow();
+	}
+	if (tail == arr.length - 1) {
+	    tail = 0;
+	} else {
+	    tail += 1;
+	}
+	arr[tail] = value;
+	size++;
     }
 
     public T removeFirst() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
+	T value = arr[head];
+	if (head == arr.length - 1) {
+	    head = 0;
+	} else {
+	    head += 1;
+	}
+	size--;
+	return value;
     }
 
     public T removeLast() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
+ 	T value = arr[tail];
+	if (tail == 0) {
+	    tail = arr.length - 1;
+	} else {
+	    tail -= 1;
+	}
+	size--;
+	return value;
     }
 
     public T getFirst() {
