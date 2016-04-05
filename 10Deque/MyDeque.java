@@ -1,50 +1,74 @@
 import java.util.*;
 
 public class MyDeque<T> {
-    private MyLinkedList<T> ll;
+    private T[] arr;
+    private int size;
+    private int head;
+    private int tail;
 
+    @SuppressWarnings("unchecked")
     public MyDeque() {
-	ll = new MyLinkedList<T>();
+	arr = (T[]) new Object[10];
+	size = 0;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void grow() {
+	T[] arr2 = (T[]) new Object[arr.length * 2];
+	int i = head;
+	int j = 0;
+	while ( j <= size - 1 && (i <= tail || i >= head) ) {
+	    arr2[j] = arr[i];
+	    // =============================
+	    // Check if i goes out of bounds
+	    if (i + 1 > arr.length - 1) {
+		i = 0;
+	    } else {
+		i++;
+	    }
+	    // =============================
+	    j++;
+	}
+	arr = arr2;
     }
 
     public void addFirst(T value) {
-	ll.add(0, value);
     }
 
     public void addLast(T value) {
-	ll.add(value);
     }
 
     public T removeFirst() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return ll.remove(0);
     }
 
     public T removeLast() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return ll.remove(ll.size() - 1);
     }
 
     public T getFirst() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return ll.get(0);
+	return arr[head];
     }
 
     public T getLast() {
 	if (isEmpty()) {
 	    throw new NoSuchElementException();
 	}
-	return ll.get(ll.size() - 1);
+	return arr[tail];
     }
 
     public boolean isEmpty() {
-	return ll.size() == 0;
+	return size() == 0;
+    }
+
+    public int size() {
+	return size;
     }
 }
-
