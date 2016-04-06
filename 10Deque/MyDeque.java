@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class MyDeque<T> {
-    public T[] arr;
+    private T[] arr;
     private int size;
-    public int head;
-    public int tail;
+    private int head;
+    private int tail;
 
     @SuppressWarnings("unchecked")
     public MyDeque() {
