@@ -24,7 +24,7 @@ public class BetterMaze{
     private int[]    solution;
     private int      startRow,startCol;
     private Frontier<Node> placesToGo;
-    private boolean  animate;//default to false
+    private boolean  animate; // default to false
 
    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
@@ -53,6 +53,14 @@ public class BetterMaze{
     public boolean solveDFS(){
 	// Initialize FrontierStack
 	placesToGo = new FrontierStack<Node>();
+	return solve();
+    }
+
+   /**Search for the end of the maze using the frontier.
+      Keep going until you find a solution or run out of elements on the frontier.
+    **/
+    private boolean solve(){
+        /** IMPLEMENT THIS **/
 	// Initialize start values
 	int[] startLoc = {startRow, startCol};
 	Node start = new Node(startLoc, null);
@@ -63,6 +71,9 @@ public class BetterMaze{
 	int[] coords = startLoc;
 	Node curNode = start;
 	while (maze[row][col] != 'E') {
+	    if (maze[row][col] != 'S') {
+		maze[row][col] = '.';
+	    }
 	    addNeighbors(coords, curNode);
 	    if (placesToGo.hasNext()) {
 		curNode = placesToGo.next();
@@ -72,6 +83,7 @@ public class BetterMaze{
 	    } else {
 		return false;
 	    }
+	    System.out.println(this);
 	}
 	return true;
     }
@@ -100,20 +112,11 @@ public class BetterMaze{
 	} else if (maze[row][col] == '.') {
 	    return false;
 	}
-	maze[row][col] = '.';
 	return true;
     }
 
-   /**Search for the end of the maze using the frontier.
-      Keep going until you find a solution or run out of elements on the frontier.
-    **/
-    private boolean solve(){
-        /** IMPLEMENT THIS **/
-	return false;
-    }
-
    /**mutator for the animate variable  **/
-    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }
+    public void setAnimate(boolean b){ animate = b; }
 
 
     public BetterMaze(String filename){
@@ -124,7 +127,7 @@ public class BetterMaze{
 	startCol = -1;
 	//read the whole maze into a single string first
 	String ans = "";
-	try{
+	try {
 	    Scanner in = new Scanner(new File(filename));
 
 	    //keep reading next line
@@ -155,12 +158,6 @@ public class BetterMaze{
 	    }
 	}
     }
-
-
-
-
-
-
 
     private static final String CLEAR_SCREEN =  "\033[2J";
     private static final String HIDE_CURSOR =  "\033[?25l";
@@ -197,9 +194,9 @@ public class BetterMaze{
 		ans += color(37,40) + "\n";
 	    }
 	    char c =  maze[i / maxc][i % maxc];
-	    if(c == '#'){
+	    if (c == '#') {
 		ans += color(38,47)+c;
-	    }else{
+	    } else {
 		ans += color(33,40)+c;
 	    }
 	}
