@@ -3,20 +3,20 @@ import java.io.*;
 
 public class BetterMaze{
     private class Node {
-	int[] loc;
-	Node prev;
-	
+	int[] location;
+	Node previous;
+
 	public Node(int[] location, Node previous) {
-	    loc = location;
-	    prev = previous;
+	    this.location = location;
+	    this.previous = previous;
 	}
 
 	public Node getPrev() {
-	    return prev;
+	    return previous;
 	}
 
 	public int[] getLocation() {
-	    return loc;
+	    return location;
 	}
     }
 
@@ -29,46 +29,91 @@ public class BetterMaze{
    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
      *the coordinates of the solution from start to end.
-     *Precondition : one of the solveXXX methods has already been 
+     *Precondition : one of the solveXXX methods has already been
      * called (solveBFS OR solveDFS OR solveAStar)
      *(otherwise an empty array is returned)
      *Postcondition:  the correct solution is in the returned array
     **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/      
+        /** IMPLEMENT THIS **/
 	return new int[1];
-    }    
+    }
 
 
     /**initialize the frontier as a queue and call solve
     **/
-    public boolean solveBFS(){  
-        /** IMPLEMENT THIS **/      
+    public boolean solveBFS(){
+        /** IMPLEMENT THIS **/
 	return false;
-    }   
+    }
 
 
    /**initialize the frontier as a stack and call solve
-    */ 
-    public boolean solveDFS(){  
-	Frontier<Node> dfs = new FrontierStack<Node>();
+    */
+    public boolean solveDFS(){
+	// Initialize FrontierStack
+	placesToGo = new FrontierStack<Node>();
+	// Initialize start values
 	int[] startLoc = {startRow, startCol};
 	Node start = new Node(startLoc, null);
-	dfs.add(maze[startRow][startCol]);
-	System.out.println(startRow);
-	System.out.println(startCol);
-    }    
+	placesToGo.add(start);
+	// Current values
+	int row = startRow;
+	int col = startCol;
+	int[] coords = startLoc;
+	Node curNode = start;
+	while (maze[row][col] != 'E') {
+	    addNeighbors(coords, curNode);
+	    if (placesToGo.hasNext()) {
+		curNode = placesToGo.next();
+		coords = curNode.getLocation();
+		row = coords[0];
+		col = coords[1];
+	    } else {
+		return false;
+	    }
+	}
+	return true;
+    }
 
-   /**Search for the end of the maze using the frontier. 
+    private boolean addNeighbors(int[] coords, Node cur) {
+	if (isValid(coords[0], coords[1] + 1)) {
+		placesToGo.add(new Node(new int[]{coords[0], coords[1] + 1}, cur));
+	}
+	if (isValid(coords[0] - 1, coords[1])) {
+		placesToGo.add(new Node(new int[]{coords[0] - 1, coords[1]}, cur));
+	}
+	if (isValid(coords[0], coords[1] - 1)) {
+		placesToGo.add(new Node(new int[]{coords[0], coords[1] - 1}, cur));
+	}
+	if (isValid(coords[0] + 1, coords[1])) {
+		placesToGo.add(new Node(new int[]{coords[0] + 1, coords[1]}, cur));
+	}
+	return true;
+    }
+
+    private boolean isValid(int row, int col) {
+	if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length) {
+	    return false;
+	} else if (maze[row][col] == '#') {
+	    return false;
+	} else if (maze[row][col] == '.') {
+	    return false;
+	}
+	maze[row][col] = '.';
+	return true;
+    }
+
+   /**Search for the end of the maze using the frontier.
       Keep going until you find a solution or run out of elements on the frontier.
     **/
-    private boolean solve(){  
-        /** IMPLEMENT THIS **/  
+    private boolean solve(){
+        /** IMPLEMENT THIS **/
 	return false;
-    }    
-     
+    }
+
    /**mutator for the animate variable  **/
-    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }    
+    public void setAnimate(boolean b){  /** IMPLEMENT THIS **/ }
 
 
     public BetterMaze(String filename){
@@ -164,12 +209,12 @@ public class BetterMaze{
 	}else{
 	    return ans + color(37,40) + "\n";
 	}
-    } 
-    
+    }
 
 
-       
-    
-    
+
+
+
+
 
 }
