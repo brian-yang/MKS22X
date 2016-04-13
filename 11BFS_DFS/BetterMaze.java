@@ -35,16 +35,15 @@ public class BetterMaze{
      *Postcondition:  the correct solution is in the returned array
     **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/
-	return new int[1];
+	return solution;
     }
-
 
     /**initialize the frontier as a queue and call solve
     **/
     public boolean solveBFS(){
-        /** IMPLEMENT THIS **/
-	return false;
+	// Initialize FrontierQueue
+	placesToGo = new FrontierQueue<Node>();
+	return solve();
     }
 
 
@@ -83,8 +82,12 @@ public class BetterMaze{
 	    } else {
 		return false;
 	    }
-	    System.out.println(this);
+	    if (animate) {
+		System.out.println(this);
+		wait(20);
+	    }
 	}
+	solution = coords;
 	return true;
     }
 
@@ -117,7 +120,6 @@ public class BetterMaze{
 
    /**mutator for the animate variable  **/
     public void setAnimate(boolean b){ animate = b; }
-
 
     public BetterMaze(String filename){
 	animate = false;
@@ -152,17 +154,19 @@ public class BetterMaze{
 	for(int i = 0; i < ans.length(); i++){
 	    char c = ans.charAt(i);
 	    maze[i / maxc][i % maxc] = c;
-	    if(c == 'S'){
+	    if(c == 'S') {
 		startCol = i % maxc;
 		startRow = i / maxc;
 	    }
 	}
     }
 
+    // ====================================================
+
     private static final String CLEAR_SCREEN =  "\033[2J";
     private static final String HIDE_CURSOR =  "\033[?25l";
     private static final String SHOW_CURSOR =  "\033[?25h";
-    private String go(int x,int y){
+    private String go(int x, int y){
 	return ("\033[" + x + ";" + y + "H");
     }
     private String color(int foreground,int background){
@@ -180,7 +184,6 @@ public class BetterMaze{
 	catch (InterruptedException e) {
 	}
     }
-
 
     public String toString(){
 	int maxr = maze.length;
@@ -203,15 +206,9 @@ public class BetterMaze{
 	//nice animation string
 	if(animate){
 	    return HIDE_CURSOR + go(0,0) + ans + color(37,40) +"\n"+ SHOW_CURSOR + color(37,40);
-	}else{
+	} else {
 	    return ans + color(37,40) + "\n";
 	}
     }
-
-
-
-
-
-
 
 }
