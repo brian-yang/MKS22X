@@ -9,6 +9,9 @@ public class Driver {
 	    bs.add(i);
 	}
 	System.out.println(bs.getHeight());
-	System.out.println(bs);
+	System.out.println(bs.contains(100));
+	System.out.println(bs.contains(-1));
+	System.out.println(bs.contains(9000));
+	//System.out.println(bs);
     }
 }
