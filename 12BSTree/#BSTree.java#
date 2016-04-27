@@ -53,6 +53,7 @@ public class BSTree<T extends Comparable<T>>{
 	}
 
 	// Purpose: remove value from tree
+	// Precondition: node has 2 children
 	public void remove(T value) {
 	    removeRecur(value);
 	}
@@ -69,44 +70,38 @@ public class BSTree<T extends Comparable<T>>{
 		    return true;
 		}
 	    }
-
 	    // Look at the children of the current node
 	    else {
-		System.out.println(data);
-		if (left != null) {
-		    // Left
-		    if (left.getValue().compareTo(value) == 0 &&
-			left.numChildren() == 1) {
-			// doesn't matter if one child is null
-			setLeftNode(left.getLeftNode());
-			setRightNode(left.getRightNode());
-			return true;
-		    } else if (left.getValue().compareTo(value) == 0 &&
-			       left.numChildren() == 0) {
-			left = null;
-			return true;
-		    } else if (left.removeRecur(value)) {
-			return true;
-		    }
+		// Left
+		if (left.getValue().compareTo(value) == 0 &&
+		    left.numChildren() == 1) {
+		    // doesn't matter if one child is null
+		    setLeftNode(left.getLeftNode());
+		    setRightNode(left.getRightNode());
+		    return true;
+		} else if (left.getValue().compareTo(value) == 0 &&
+			   left.numChildren() == 0) {
+		    left = null;
+		    return true;
+		} else if (left.removeRecur(value)) {
+		    return true;
 		}
+		// Right
+		else if (right.getValue().compareTo(value) == 0 &&
+		    right.numChildren() == 1){
+		    // doesn't matter if one child is null
+		    setLeftNode(right.getLeftNode());
+		    setRightNode(right.getRightNode());
+		    return true;
+		} else if (right.getValue().compareTo(value) == 0 &&
+		           right.numChildren() == 0) {
+		    right = null;
+		    return true;
+		} else if (right.removeRecur(value)) {
+		    return true;
+		} else {
+		}		    return false;
 
-		if (right != null) {
-		    // Right
-		    if (right.getValue().compareTo(value) == 0 &&
-			right.numChildren() == 1){
-			// doesn't matter if one child is null
-			setLeftNode(right.getLeftNode());
-			setRightNode(right.getRightNode());
-			return true;
-		    } else if (right.getValue().compareTo(value) == 0 &&
-			       right.numChildren() == 0) {
-			right = null;
-			return true;
-		    } else if (right.removeRecur(value)) {
-			return true;
-		    }
-		}
-		return false;
 	    }
 	}
 
@@ -223,9 +218,8 @@ public class BSTree<T extends Comparable<T>>{
 	    } else {
 		root = root.getRightNode();
 	    }
-	} else {
-	    root.remove(value);
 	}
+    	root.remove(value);
 	return value; // TODO: need to return root.remove(value)
     }
 
