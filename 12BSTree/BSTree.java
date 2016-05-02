@@ -72,7 +72,6 @@ public class BSTree<T extends Comparable<T>>{
 
 	    // Look at the children of the current node
 	    else {
-		System.out.println(data);
 		if (left != null) {
 		    // Left
 		    if (left.getValue().compareTo(value) == 0 &&
@@ -212,21 +211,30 @@ public class BSTree<T extends Comparable<T>>{
     	if (isEmpty() || !root.contains(value)) {
     	    throw new NoSuchElementException();
     	}
+	// deletes root node if it has 0 children and contains the
+	// desired value
     	if (root.numChildren() == 0) {
     	    T oldValue = root.getValue();
     	    root = null;
     	    return oldValue;
-    	} else if (root.numChildren() == 1 &&
+    	}
+	// replaces root node with left or right node if it has 1 child
+	// and contains the desired value
+	else if (root.numChildren() == 1 &&
 		   root.getValue().compareTo(value) == 0) {
+	    T oldValue;
 	    if (root.getLeftNode() != null) {
+		oldValue = root.getLeftNode().getValue();
 		root = root.getLeftNode();
 	    } else {
+		oldValue = root.getRightNode().getValue();
 		root = root.getRightNode();
 	    }
+	    return oldValue;
 	} else {
 	    root.remove(value);
 	}
-	return value; // TODO: need to return root.remove(value)
+	return value;
     }
 
     // Returns the BSTree in String form
