@@ -23,7 +23,7 @@ public class Driver {
 	System.out.println(bs.contains(-1));
 	System.out.println(bs.contains(9000));
 	System.out.println(bs);
-	System.out.println(bs.remove(100));
+	bs.remove(100);
 	System.out.println(bs.getHeight());
 	System.out.println(bs);
     }

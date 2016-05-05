@@ -207,7 +207,7 @@ public class BSTree<T extends Comparable<T>>{
     }
 
     // Removes values from the BSTree
-    public T remove (T value) {
+    public void remove (T value) {
     	if (isEmpty() || !root.contains(value)) {
     	    throw new NoSuchElementException();
     	}
@@ -216,7 +216,6 @@ public class BSTree<T extends Comparable<T>>{
     	if (root.numChildren() == 0) {
     	    T oldValue = root.getValue();
     	    root = null;
-    	    return oldValue;
     	}
 	// replaces root node with left or right node if it has 1 child
 	// and contains the desired value
@@ -230,11 +229,9 @@ public class BSTree<T extends Comparable<T>>{
 		oldValue = root.getRightNode().getValue();
 		root = root.getRightNode();
 	    }
-	    return oldValue;
 	} else {
 	    root.remove(value);
 	}
-	return value;
     }
 
     // Returns the BSTree in String form
