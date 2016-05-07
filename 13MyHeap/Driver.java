@@ -7,7 +7,7 @@ public class Driver {
 	    arr[i] = (int) (Math.random() * 100);
 	}
 	System.out.println(Arrays.toString(arr));
-	MyHeap<Integer> h = new MyHeap<Integer>(arr);
+	MyHeap<Integer> h = new MyHeap<Integer>(arr, false);
 	System.out.println(h.size());
 	System.out.println(h);
 	h.add(15);

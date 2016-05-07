@@ -4,10 +4,12 @@ import java.util.*;
 public class MyHeap<T extends Comparable<T>> {
     private int size;
     private T[] data;
+    private boolean isMax;
 
     public MyHeap() {
 	size = 1;
 	data = (T[]) new Comparable[size];
+	isMax = true;
     }
 
     public MyHeap(T[] array) {
@@ -16,6 +18,23 @@ public class MyHeap<T extends Comparable<T>> {
 	for (int i = 1; i < size + 1; i++) {
 	    data[i] = array[i - 1];
 	}
+	isMax = true;
+	heapify();
+    }
+
+    public MyHeap(boolean isMax) {
+	size = 1;
+	data = (T[]) new Comparable[size];
+	this.isMax = isMax;
+    }
+
+    public MyHeap(T[] array, boolean isMax) {
+	size = array.length;
+	data = (T[]) new Comparable[size + 1];
+	for (int i = 1; i < size + 1; i++) {
+	    data[i] = array[i - 1];
+	}
+	this.isMax = isMax;
 	heapify();
     }
 
@@ -38,24 +57,41 @@ public class MyHeap<T extends Comparable<T>> {
 	if (size >= 2*k) {
 	    if (size >= 2*k + 1) {
 		int swapIndex = 0;
-		if (data[2*k].compareTo(data[2*k + 1]) >= 0) {
-		    swapIndex = 2*k;
+		// checks which node could be swapped with the parent node
+		if (isMax) {
+		    if (data[2*k].compareTo(data[2*k + 1]) >= 0) { swapIndex = 2*k; }
+		    else { swapIndex = 2*k + 1; }
 		} else {
-		    swapIndex = 2*k + 1;
+		    if (data[2*k].compareTo(data[2*k + 1]) < 0) { swapIndex = 2*k; }
+		    else { swapIndex = 2*k + 1; }
 		}
 		// checks if value should be pushed down
-		if (data[k].compareTo(data[swapIndex]) < 0) {
-		    swap(k, swapIndex);
-		    pushDown(swapIndex); // recursive call
+		if (isMax) {
+		    if (data[k].compareTo(data[swapIndex]) < 0) {
+			swap(k, swapIndex);
+			pushDown(swapIndex); // recursive call
+		    }
+		} else {
+		    if (data[k].compareTo(data[swapIndex]) > 0) {
+			swap(k, swapIndex);
+			pushDown(swapIndex); // recursive call
+		    }
 		}
 	    } else {
 		// checks if value should be pushed down
-		if (data[k].compareTo(data[2*k]) < 0) {
-		    swap(k, 2*k);
-		    pushDown(2*k); // recursive call
+		if (isMax) {
+		    if (data[k].compareTo(data[2*k]) < 0) {
+			swap(k, 2*k);
+			pushDown(2*k); // recursive call
+		    }
+		} else {
+		    if (data[k].compareTo(data[2*k]) > 0) {
+			swap(k, 2*k);
+			pushDown(2*k); // recursive call
+		    }
 		}
-	    }
-	}
+	    } // end inner if
+	} // end outer if
     }
 
     /**pushUp
@@ -67,11 +103,18 @@ public class MyHeap<T extends Comparable<T>> {
     **/
     private void pushUp(int k) {
 	if (k >= 2) {
-	    if (data[k].compareTo(data[k/2]) >= 1) {
-		swap(k, k/2);
-		pushUp(k/2); // recursive call
-	    }
-	}
+	    if (isMax) {
+		if (data[k].compareTo(data[k/2]) >= 1) {
+		    swap(k, k/2);
+		    pushUp(k/2); // recursive call
+		}
+	    } else {
+		if (data[k].compareTo(data[k/2]) <= -1) {
+		    swap(k, k/2);
+		    pushUp(k/2); // recursive call
+		}
+	    } // end inner if
+	} // end outer if
     }
 
     private void swap(int ind1, int ind2) {
@@ -123,7 +166,4 @@ public class MyHeap<T extends Comparable<T>> {
     public String toString() {
 	return Arrays.toString(data);
     }
-
-    public MyHeap(boolean isMax) {}
-    public MyHeap(T[] array, boolean isMax) {}
 }
