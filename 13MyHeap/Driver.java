@@ -14,11 +14,11 @@ public class Driver {
 	h.add(20);
 	h.add(100);
 	System.out.println(h);
-	h.delete();
+	h.remove();
 	h.add(300);
 	System.out.println(h);
 	System.out.println(h.size());
-	h.delete();
+	h.remove();
 	System.out.println(h);
     }
 }

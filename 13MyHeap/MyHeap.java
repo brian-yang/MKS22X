@@ -43,6 +43,9 @@ public class MyHeap<T extends Comparable<T>> {
     }
 
     public T peek() {
+	if (size == 0) {
+	    throw new NoSuchElementException();
+	}
 	return data[1];
     }
 
@@ -58,37 +61,18 @@ public class MyHeap<T extends Comparable<T>> {
 	    if (size >= 2*k + 1) {
 		int swapIndex = 0;
 		// checks which node could be swapped with the parent node
-		if (isMax) {
-		    if (data[2*k].compareTo(data[2*k + 1]) >= 0) { swapIndex = 2*k; }
-		    else { swapIndex = 2*k + 1; }
-		} else {
-		    if (data[2*k].compareTo(data[2*k + 1]) < 0) { swapIndex = 2*k; }
-		    else { swapIndex = 2*k + 1; }
-		}
+		if (compare(data[2*k], data[2*k + 1]) >= 0) { swapIndex = 2*k; }
+		else { swapIndex = 2*k + 1; }
 		// checks if value should be pushed down
-		if (isMax) {
-		    if (data[k].compareTo(data[swapIndex]) < 0) {
+		if (compare(data[k], data[swapIndex]) < 0) {
 			swap(k, swapIndex);
 			pushDown(swapIndex); // recursive call
-		    }
-		} else {
-		    if (data[k].compareTo(data[swapIndex]) > 0) {
-			swap(k, swapIndex);
-			pushDown(swapIndex); // recursive call
-		    }
 		}
 	    } else {
 		// checks if value should be pushed down
-		if (isMax) {
-		    if (data[k].compareTo(data[2*k]) < 0) {
-			swap(k, 2*k);
-			pushDown(2*k); // recursive call
-		    }
-		} else {
-		    if (data[k].compareTo(data[2*k]) > 0) {
-			swap(k, 2*k);
-			pushDown(2*k); // recursive call
-		    }
+		if (compare(data[k], data[2*k]) < 0) {
+		    swap(k, 2*k);
+		    pushDown(2*k); // recursive call
 		}
 	    } // end inner if
 	} // end outer if
@@ -103,17 +87,10 @@ public class MyHeap<T extends Comparable<T>> {
     **/
     private void pushUp(int k) {
 	if (k >= 2) {
-	    if (isMax) {
-		if (data[k].compareTo(data[k/2]) >= 1) {
-		    swap(k, k/2);
-		    pushUp(k/2); // recursive call
-		}
-	    } else {
-		if (data[k].compareTo(data[k/2]) <= -1) {
-		    swap(k, k/2);
-		    pushUp(k/2); // recursive call
-		}
-	    } // end inner if
+	    if (compare(data[k], data[k/2]) >= 1) {
+		swap(k, k/2);
+		pushUp(k/2); // recursive call
+	    }
 	} // end outer if
     }
 
@@ -130,7 +107,7 @@ public class MyHeap<T extends Comparable<T>> {
     }
 
     // delete the root
-    public T delete() {
+    public T remove() {
 	if (size == 0) {
 	    throw new NoSuchElementException();
 	}
@@ -161,6 +138,14 @@ public class MyHeap<T extends Comparable<T>> {
 	    newData[i] = data[i];
 	}
 	data = newData;
+    }
+    
+    private int compare(T value1, T value2) {
+	if (isMax) {
+	    return value1.compareTo(value2);
+	} else {
+	    return value2.compareTo(value1);
+	}   
     }
 
     public String toString() {
