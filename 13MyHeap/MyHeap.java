@@ -7,8 +7,8 @@ public class MyHeap<T extends Comparable<T>> {
     private boolean isMax;
 
     public MyHeap() {
-	size = 1;
-	data = (T[]) new Comparable[size];
+	size = 0;
+	data = (T[]) new Comparable[1];
 	isMax = true;
     }
 
@@ -23,8 +23,8 @@ public class MyHeap<T extends Comparable<T>> {
     }
 
     public MyHeap(boolean isMax) {
-	size = 1;
-	data = (T[]) new Comparable[size];
+	size = 0;
+	data = (T[]) new Comparable[1];
 	this.isMax = isMax;
     }
 
