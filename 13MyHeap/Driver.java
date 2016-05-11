@@ -18,7 +18,7 @@ public class Driver {
 	h.add(300);
 	System.out.println(h);
 	System.out.println(h.size());
-	h.remove();
+	h.delete();
 	System.out.println(h);
     }
 }

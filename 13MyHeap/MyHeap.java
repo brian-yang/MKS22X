@@ -107,7 +107,7 @@ public class MyHeap<T extends Comparable<T>> {
     }
 
     // delete the root
-    public T remove() {
+    public T delete() {
 	if (size == 0) {
 	    throw new NoSuchElementException();
 	}

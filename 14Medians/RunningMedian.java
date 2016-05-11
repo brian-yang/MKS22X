@@ -26,10 +26,10 @@ public class RunningMedian {
 		heapR.add(x);
 	    }
 	    while (heapL.size() - heapR.size() > 1) {
-		heapR.add(heapL.remove());
+		heapR.add(heapL.delete());
 	    }
 	    while (heapR.size() - heapL.size() > 1) {
-		heapL.add(heapR.remove());
+		heapL.add(heapR.delete());
 	    }
 	    calculateMedian();
 	}
